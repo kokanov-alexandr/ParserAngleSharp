@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Html.Dom;
+using ParserAngleSharp.Core.Colapsar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace ParserAngleSharp.Core
 {
     interface IParser<T> where T : class
     {
-        T Parse(IHtmlDocument document);
+        List<string> GetElementsPages(IHtmlDocument document);
+        T ParseElement(IHtmlDocument document);
     }
 }

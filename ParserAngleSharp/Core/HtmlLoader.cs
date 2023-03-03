@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ParserAngleSharp.Core
@@ -10,16 +6,13 @@ namespace ParserAngleSharp.Core
     class HtmlLoader
     {
         readonly HttpClient client;
-        readonly string Url;
         public HtmlLoader(IParserSettings settings)
         {
             client = new HttpClient();
-            Url = $"{settings.BaseUrl}/{settings.Prefix}";
         }
 
-        public async Task<string> GetSourseBypageId(int id)
+        public async Task<string> GetSourseByPath(string currentUrl)
         {
-            var currentUrl = Url.Replace("{CurrentId}", id.ToString());
             var response = await client.GetAsync(currentUrl);
             string sourse = null;
 
@@ -27,7 +20,6 @@ namespace ParserAngleSharp.Core
             {
                 sourse = await response.Content.ReadAsStringAsync();
             }
-
             return sourse;
         }
     }

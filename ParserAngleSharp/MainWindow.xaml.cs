@@ -1,56 +1,52 @@
-﻿using ParserAngleSharp.Core.Colapsar;
-using ParserAngleSharp.Core;
+﻿using ParserAngleSharp.Core;
+using ParserAngleSharp.Core.Colapsar;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ParserAngleSharp
 {
     public partial class MainWindow : Window
     {
-        ParserWorker<Present[]> parser;
+        ParserWorker<Present> parser;
         public MainWindow()
         {
             InitializeComponent();
-            parser = new ParserWorker<Present[]>(new ColapsarParser());
-            parser.OnCompleted += Parser_OnCompleted;
+            parser = new ParserWorker<Present> (new ColapsarParser());
             parser.OnNewData += Parser_OnNewData;
         }
 
 
-        private void Parser_OnNewData(object arg1, Present[] arg2)
+        private void Parser_OnNewData(object arg1, List<Present> arg2)
         {
             foreach (var item in arg2)
             {
-                ResultList.Items.Add(item.Name + "\n" + item.Price + "\n" + item.Image + "\n");
-            }
-        }
+                if (item.Description.Contains("\n"))
+                {
+                    item.Description.Replace("\n", "");
 
-        private void Parser_OnCompleted(object obj)
-        {
+                }
+                ResultList.Items.Add(item.Name + "\n" + item.Image + "\n" + item.Description + "\n"  + item.Price + "\n");
+            }
+
+            string file_name = "C:\\Users\\HP\\source\\repos\\ParserAngleSharp\\ParserAngleSharp\\Core\\Colapsar\\Presents.csv";
+            var presents = arg2;
+            var streamWriter = new StreamWriter(file_name, true, Encoding.UTF8);
+            foreach (var present in presents)
+            {
+                streamWriter.WriteLine(present.Name + "\n" + present.Image + "\n" + present.Description + "\n" + present.Price + "\n");
+            }
+            streamWriter.Close();
             MessageBox.Show("All works done!");
         }
+
 
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
             parser.Settings = new ColapsarSettings(Int32.Parse(StartPageNumber.Text), Int32.Parse(StopPageNumber.Text));
             parser.Start();
-        }
-
-        private void ButtonStop_Click(object sender, RoutedEventArgs e)
-        {
-            parser.Abort();
         }
     }
 }

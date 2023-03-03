@@ -11,7 +11,6 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="stop_btn" Content="Stop" Margin="58,300,150,79"  Grid.Column="1" Click="ButtonStop_Click"/>
         <ListBox x:Name="ResultList" HorizontalAlignment="Left" Height="345" Margin="33,48,0,0" VerticalAlignment="Top" Width="367" d:ItemsSource="{d:SampleData ItemCount=5}"/>
         <Label Content="Start point" HorizontalAlignment="Left" Height="31" Margin="415,87,0,0" VerticalAlignment="Top" Width="138" Grid.ColumnSpan="2"/>
         <TextBox x:Name="StartPageNumber" HorizontalAlignment="Left" Height="26" Margin="415,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2"/>
