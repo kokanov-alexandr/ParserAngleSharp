@@ -23,16 +23,18 @@ namespace ParserAngleSharp.Core.Colapsar
             foreach (var item in description_list)
             {
                 description += item.TextContent;
-                
-                if (item.TextContent[item.TextContent.Length - 1] == ' ')
-                {
-                    item.TextContent.Replace(" ", "");
-                }
-                if (item.TextContent[item.TextContent.Length - 1] != '.')
+                char last_char = item.TextContent[item.TextContent.Length - 1];
+
+                if (last_char != '.')
                 {
                     description += ".";
                 }
                 description += " ";
+
+                if (description.Contains("\n"))
+                {
+                    description.Replace("\n", "");
+                }
             }
 
             return new Present
