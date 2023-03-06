@@ -88,7 +88,9 @@
     </Compile>
     <Compile Include="Core\Colapsar\ColapsarParser.cs" />
     <Compile Include="Core\Colapsar\ColapsarSettings.cs" />
-    <Compile Include="Core\Colapsar\Present.cs" />
+    <Compile Include="Core\LeFutur\LeFuturParser.cs" />
+    <Compile Include="Core\LeFutur\LeFuturSettings.cs" />
+    <Compile Include="Core\Present.cs" />
     <Compile Include="Core\HtmlLoader.cs" />
     <Compile Include="Core\IParser.cs" />
     <Compile Include="Core\IParserSettings.cs" />
@@ -117,7 +119,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Core\Colapsar\Presents.csv" />
+    <None Include="Core\Presents.csv" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -1,31 +1,26 @@
-﻿using AngleSharp.Dom;
-using AngleSharp.Html.Dom;
-using AngleSharp.Html.Parser;
+﻿using AngleSharp.Html.Parser;
 using ParserAngleSharp.Core.Colapsar;
-using ParserAngleSharp.Properties;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Xml.Linq;
 
 namespace ParserAngleSharp.Core
 {
-    class ParserWorker<T> where T : class
+    class ParserWorker
     {
-        IParser<T> parser;
+        IParser parser;
         IParserSettings parserSettings;
         HtmlLoader loader;
-        public event Action<object, List<T>> OnNewData;
-        public ParserWorker(IParser<T> parser)
+        public event Action<object, List<Present>> OnNewData;
+        public ParserWorker(IParser parser)
         {
             this.parser = parser;
         }
-        public ParserWorker(IParser<T> parser, IParserSettings parserSettings) : this(parser)
+        public ParserWorker(IParser parser, IParserSettings parserSettings) : this(parser)
         {
             this.parserSettings = parserSettings;
         }
 
-        public IParser<T> Parser
+        public IParser Parser
         {
             get
             {
@@ -67,7 +62,7 @@ namespace ParserAngleSharp.Core
                 parser.GetElementsPages(document).ForEach(item => elements_string_pages.Add(item));
             }
 
-            var presents = new List<T>();
+            var presents = new List<Present>();
             foreach (var item in elements_string_pages)
             {
                 var source2 = await loader.GetSourseByPath(item);

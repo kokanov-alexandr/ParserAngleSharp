@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ParserAngleSharp.Core.Colapsar
 {
-    class ColapsarParser : IParser<Present>
+    class ColapsarParser : IParser
     {
         public Present ParseElement(IHtmlDocument document)
         {
@@ -33,7 +33,7 @@ namespace ParserAngleSharp.Core.Colapsar
 
                 if (description.Contains("\n"))
                 {
-                    description.Replace("\n", "");
+                    description = description.Replace("\n", "");
                 }
             }
 

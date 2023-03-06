@@ -2,24 +2,25 @@
 using ParserAngleSharp.Core.Colapsar;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Text;
 using System.Windows;
 using MySql.Data.MySqlClient;
+using ParserAngleSharp.Core.MrGeek;
 
 namespace ParserAngleSharp
 {
     public partial class MainWindow : Window
     {
-        ParserWorker<Present> parser;
+        ParserWorker parser;
+        List<Present> presents;
         public MainWindow()
         {
             InitializeComponent();
-            parser = new ParserWorker<Present> (new ColapsarParser());
-            parser.OnNewData += Parser_OnNewData;           
+            parser = new ParserWorker (new LeFuturParser());
+            parser.OnNewData += Parser_OnNewData;
+            presents = new List<Present>();
         }
-
 
         private void Parser_OnNewData(object arg1, List<Present> arg2)
         {
@@ -28,16 +29,26 @@ namespace ParserAngleSharp
                 ResultList.Items.Add(item.Name + "\n" + item.Image + "\n" + item.Description + "\n"  + item.Price);
             }
 
-            string file_name = "C:\\Users\\HP\\source\\repos\\ParserAngleSharp\\ParserAngleSharp\\Core\\Colapsar\\Presents.csv";
-            var presents = arg2;
+            string file_name = "C:\\Users\\HP\\source\\repos\\ParserAngleSharp\\ParserAngleSharp\\Core\\Presents.csv";
+            presents = arg2;
             var streamWriter = new StreamWriter(file_name, true, Encoding.UTF8);
             foreach (var present in presents)
             {
                 streamWriter.WriteLine(present.Name + "\n" + present.Image + "\n" + present.Description + "\n" + present.Price);
             }
             streamWriter.Close();
+            MessageBox.Show("All work is done!");
+        }
 
 
+        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        {
+            parser.Settings = new LeFuturSettings(Int32.Parse(StartPageNumber.Text), Int32.Parse(StopPageNumber.Text));
+            parser.Start();
+        }
+
+        private void save_btn_Click(object sender, RoutedEventArgs e)
+        {
             Database database = new Database();
 
             foreach (var present in presents)
@@ -57,19 +68,7 @@ namespace ParserAngleSharp
 
                 database.CloseConnection();
             }
-            MessageBox.Show("All work is done!");
-        }
-
-
-        private void ButtonStart_Click(object sender, RoutedEventArgs e)
-        {
-            parser.Settings = new ColapsarSettings(Int32.Parse(StartPageNumber.Text), Int32.Parse(StopPageNumber.Text));
-            parser.Start();
-        }
-
-        private void Save_fle_btn_Click(object sender, RoutedEventArgs e)
-        {
-
+            MessageBox.Show("Files have been saved!");
         }
     }
 }
