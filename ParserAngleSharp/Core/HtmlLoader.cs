@@ -10,7 +10,6 @@ namespace ParserAngleSharp.Core
         {
             client = new HttpClient();
         }
-
         public async Task<string> GetSourseByPath(string currentUrl)
         {
             var response = await client.GetAsync(currentUrl);

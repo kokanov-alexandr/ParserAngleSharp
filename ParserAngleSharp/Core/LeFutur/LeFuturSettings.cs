@@ -2,16 +2,18 @@
 {
     internal class LeFuturSettings : IParserSettings
     {
+        
+        public string BaseUrl { get; set; }
+        public string Prefix { get; set; }
+        public int StartPoint { get; set; }
+        public int EndPoint { get; set; }
         public LeFuturSettings(int StartPoint, int EndPoint)
         {
             this.StartPoint = StartPoint;
             this.EndPoint = EndPoint;
+            Prefix = "?page={CurrentId}";
+            BaseUrl = "https://lefutur.ru/";
         }
-
-        public string BaseUrl { get; set; } = "https://lefutur.ru/";
-        public string Prefix { get; set; } = "?page={CurrentId}";
-        public int StartPoint { get; set; }
-        public int EndPoint { get; set; }
 
     }
 }

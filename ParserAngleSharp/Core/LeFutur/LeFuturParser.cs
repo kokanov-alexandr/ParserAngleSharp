@@ -2,13 +2,12 @@
 using ParserAngleSharp.Core.Colapsar;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace ParserAngleSharp.Core.MrGeek
 {
     internal class LeFuturParser : IParser
     {
-        public List<string> GetElementsPages(IHtmlDocument document)
+        public List<string> GetElementsPagesPath(IHtmlDocument document)
         {
             var items = document.GetElementsByClassName("prod-list-item");
             var result = new List<string>();
@@ -26,7 +25,6 @@ namespace ParserAngleSharp.Core.MrGeek
             var name = document.GetElementsByClassName("prod-info")[0].
                 GetElementsByTagName("h1")[0].TextContent;
             
-            
             var str_price = document.GetElementsByClassName("prod-price-box")[0].GetElementsByTagName("span")[0].TextContent;
 
             if (str_price.Length == 0)
@@ -42,13 +40,14 @@ namespace ParserAngleSharp.Core.MrGeek
             var image = "https://lefutur.ru/" + document.GetElementsByClassName("prod-info")[0].
                 GetElementsByTagName("img")[0].GetAttribute("src");
 
-
             var description_list = document.GetElementsByClassName("prod-desc");
+
             if (description_list.Length > 0)
             {
                 description_list = description_list[0].GetElementsByTagName("p");
             }
             var description = "";
+
             if (description_list != null)
             {
                 foreach (var item in description_list)
@@ -73,7 +72,6 @@ namespace ParserAngleSharp.Core.MrGeek
                 }
             }
            
-
             return new Present
             {
                 Name = name,

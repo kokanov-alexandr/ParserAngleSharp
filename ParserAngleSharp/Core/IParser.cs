@@ -6,7 +6,7 @@ namespace ParserAngleSharp.Core
 {
     interface IParser
     {
-        List<string> GetElementsPages(IHtmlDocument document);
+        List<string> GetElementsPagesPath(IHtmlDocument document);
         Present ParseElement(IHtmlDocument document);
     }
 }
