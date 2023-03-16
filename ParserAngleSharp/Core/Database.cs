@@ -4,7 +4,7 @@ namespace ParserAngleSharp
 {
     class Database
     {
-        MySqlConnection connection = new MySqlConnection("server=localhost;port=3306;username=root;password=root;database=products");
+        MySqlConnection connection = new MySqlConnection("server=localhost;port=3306;username=root;password=root;database=boardgames");
         public void OpenConnection()
         {
             if (connection.State == System.Data.ConnectionState.Closed) 

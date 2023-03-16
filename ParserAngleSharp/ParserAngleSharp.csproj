@@ -86,15 +86,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\Colapsar\ColapsarParser.cs" />
-    <Compile Include="Core\Colapsar\ColapsarSettings.cs" />
-    <Compile Include="Core\LeFutur\LeFuturParser.cs" />
-    <Compile Include="Core\LeFutur\LeFuturSettings.cs" />
-    <Compile Include="Core\Present.cs" />
+    <Compile Include="Core\BoardGame.cs" />
     <Compile Include="Core\HtmlLoader.cs" />
+    <Compile Include="Core\IgroTime\IgroTimeParser.cs" />
+    <Compile Include="Core\IgroTime\IgroTimeSettings.cs" />
     <Compile Include="Core\IParser.cs" />
     <Compile Include="Core\IParserSettings.cs" />
-    <Compile Include="Core\PaarserWorker.cs" />
+    <Compile Include="Core\ParserWorker.cs" />
     <Compile Include="Core\Database.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -119,7 +117,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Core\Presents.csv" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
