@@ -7,12 +7,13 @@ namespace ParserAngleSharp.Core
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
-        public string  Image { get; set; }
-        public string Age { get; set; }
+        public string Image { get; set; }
+        public int Age { get; set; }
         public string PlayTime { get; set; }
-        public string PlayersNumber { get; set; }
+        public int PlayersNumberMin { get; set; }
+        public int PlayersNumberMax{ get; set; }
 
-        public BoardGame(string Name, string Description, int Price, string Image, string Age, string PlayTime, string PlayersNumber) 
+        public BoardGame(string Name, string Description, int Price, string Image, int Age, string PlayTime, int PlayersNumberMin, int PlayersNumberMax) 
         {
             this.Name = Name;
             this.Description = Description;
@@ -20,11 +21,8 @@ namespace ParserAngleSharp.Core
             this.Image = Image;
             this.Age = Age;
             this.PlayTime = PlayTime;
-            this.PlayersNumber = PlayersNumber;
+            this.PlayersNumberMin = PlayersNumberMin;
+            this.PlayersNumberMax = PlayersNumberMax;
         }
-        public BoardGame() { }
-
-
-
     }
 }

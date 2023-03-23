@@ -24,6 +24,7 @@ namespace ParserAngleSharp.Core.IgroTime
             var name = document.GetElementsByClassName("col-rt")[0].GetElementsByTagName("h1")[0].TextContent.Replace("Настольная игра ", "");
 
             var str_price = "";
+
             try
             {
                 str_price = document.GetElementsByClassName("card__price__wrapper")[0].TextContent.Split('р')[0].Trim().Replace(" ", "");
@@ -37,11 +38,13 @@ namespace ParserAngleSharp.Core.IgroTime
             var image = "https://www.igrotime.ru" + document.GetElementsByClassName("col-lf")[0].
                 GetElementsByTagName("img")[0].GetAttribute("src");
 
-            string age_str = document.GetElementsByClassName("characts__item")[0].GetElementsByTagName("a")[0].TextContent.Split()[1];
+            int age = Int32.Parse(document.GetElementsByClassName("characts__item")[0].GetElementsByTagName("a")[0].TextContent.Split()[1]);
 
-            string players_count = document.GetElementsByClassName("characts__item")[1].GetElementsByTagName("a")[0].TextContent;
+            string str_players_count = document.GetElementsByClassName("characts__item")[1].GetElementsByTagName("a")[0].TextContent;
 
-                
+            int players_min = Int32.Parse(str_players_count.Split('-')[0]);
+            int players_max = Int32.Parse(str_players_count.Split('-')[1]);
+
             string time = document.GetElementsByClassName("characts__item")[2].GetElementsByTagName("span")[0].TextContent.Split('-')[0];
 
             var description_div = document.GetElementsByClassName("tabs__item tabs__item--active base-content")[0];
@@ -67,7 +70,7 @@ namespace ParserAngleSharp.Core.IgroTime
                 description += item.TextContent;
             }
             
-            return new BoardGame(name, description, Int32.Parse(str_price), image, age_str, time, players_count);
+            return new BoardGame(name, description, Int32.Parse(str_price), image, age, time, players_min, players_max);
         }
     }
 }

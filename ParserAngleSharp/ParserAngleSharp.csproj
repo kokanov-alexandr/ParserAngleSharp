@@ -90,8 +90,10 @@
     <Compile Include="Core\HtmlLoader.cs" />
     <Compile Include="Core\IgroTime\IgroTimeParser.cs" />
     <Compile Include="Core\IgroTime\IgroTimeSettings.cs" />
-    <Compile Include="Core\IParser.cs" />
-    <Compile Include="Core\IParserSettings.cs" />
+    <Compile Include="Core\Interfaces\IParser.cs" />
+    <Compile Include="Core\Interfaces\IParserSettings.cs" />
+    <Compile Include="Core\Hobbygames\HobbygamesParser.cs" />
+    <Compile Include="Core\Hobbygames\HobbygamesSettings.cs" />
     <Compile Include="Core\ParserWorker.cs" />
     <Compile Include="Core\Database.cs" />
     <Compile Include="MainWindow.xaml.cs">
