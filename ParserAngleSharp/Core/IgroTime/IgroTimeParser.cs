@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Media;
 
 namespace ParserAngleSharp.Core.IgroTime
 {
@@ -25,9 +26,26 @@ namespace ParserAngleSharp.Core.IgroTime
 
             var str_price = "";
 
+            string[] players;
+            int players_min;
+            int? players_max;
+
             try
             {
                 str_price = document.GetElementsByClassName("card__price__wrapper")[0].TextContent.Split('р')[0].Trim().Replace(" ", "");
+
+                string str_players_count = document.GetElementsByClassName("characts__item")[1].GetElementsByTagName("a")[0].TextContent;
+                players = str_players_count.Split('-');
+                players_min = Int32.Parse(players[0]);
+
+                if (players.Length != 2)
+                {
+                    players_max = null;
+                }
+                else
+                {
+                    players_max = Int32.Parse(players[1]);
+                }
             }
             catch (Exception)
             {
@@ -40,12 +58,27 @@ namespace ParserAngleSharp.Core.IgroTime
 
             int age = Int32.Parse(document.GetElementsByClassName("characts__item")[0].GetElementsByTagName("a")[0].TextContent.Split()[1]);
 
-            string str_players_count = document.GetElementsByClassName("characts__item")[1].GetElementsByTagName("a")[0].TextContent;
 
-            int players_min = Int32.Parse(str_players_count.Split('-')[0]);
-            int players_max = Int32.Parse(str_players_count.Split('-')[1]);
+            string[] array_time = document.GetElementsByClassName("characts__item")[2].GetElementsByTagName("span")[0].TextContent.Split('-');
+            int time;
 
-            string time = document.GetElementsByClassName("characts__item")[2].GetElementsByTagName("span")[0].TextContent.Split('-')[0];
+            if (array_time.Length != 2)
+            {
+                try
+                {
+                    time = Int32.Parse(array_time[0].Split(' ')[1]);
+
+                }
+                catch (Exception)
+                {
+                    return null;
+                    throw;
+                }
+            }
+            else
+            {
+                time = Int32.Parse(array_time[0]);
+            }
 
             var description_div = document.GetElementsByClassName("tabs__item tabs__item--active base-content")[0];
 

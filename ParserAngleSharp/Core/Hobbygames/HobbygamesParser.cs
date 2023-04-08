@@ -26,7 +26,7 @@ namespace ParserAngleSharp.Core.Mosigra
             var name = document.GetElementsByClassName("product-info__main")[0].GetElementsByTagName("h1")[0].TextContent;
                 
             var str_price = document.GetElementsByClassName("price-block")[0].TextContent.Trim().Replace(" ", "");
-            int str = Int32.Parse(str_price = str_price.Replace(((char)(160)).ToString(), "").Replace("₽", ""));
+            int price = Int32.Parse(str_price = str_price.Replace(((char)(160)).ToString(), "").Replace("₽", ""));
 
             var image = document.GetElementsByClassName("product-info__images")[0].GetElementsByTagName("a")[0].GetAttribute("href");
 
@@ -36,7 +36,7 @@ namespace ParserAngleSharp.Core.Mosigra
                 TextContent.Replace(" игрока", "").Replace(" игроков", "");
 
             int players_min = Int32.Parse(str_players_count.Split('-')[0].Split('+')[0]);
-            int players_max = 0;
+            int players_max;
             try
             {
                 players_max = Int32.Parse(str_players_count.Split('-')[1]);
@@ -47,7 +47,17 @@ namespace ParserAngleSharp.Core.Mosigra
                 players_max = 0;
             }
 
-            string time = document.GetElementsByClassName("time")[0].GetElementsByTagName("span")[0].TextContent.Split('-')[0];
+            var array_time = document.GetElementsByClassName("time")[0].GetElementsByTagName("span")[0].TextContent.Split('-');
+            int time;
+
+            if (array_time.Length != 2)
+            {
+                time = Int32.Parse(array_time[0].Split(' ')[0].Replace("+", ""));
+            }
+            else
+            {
+                time = Int32.Parse(array_time[0]);
+            }
 
             var description_div = document.GetElementsByClassName("desc-text")[0];
 
@@ -59,7 +69,7 @@ namespace ParserAngleSharp.Core.Mosigra
             {
                 description += item.TextContent;
             }
-            return new BoardGame(name, description, Int32.Parse(str_price), image, age, time, players_min, players_max);
+            return new BoardGame(name, description, price, image, age, time, players_min, players_max);
         }
     }
 }

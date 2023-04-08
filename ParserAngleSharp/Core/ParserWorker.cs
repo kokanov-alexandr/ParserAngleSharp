@@ -10,6 +10,7 @@ namespace ParserAngleSharp.Core
         IParserSettings parserSettings;
         HtmlLoader loader;
         public event Action<object, List<BoardGame>> OnNewData;
+        public event Action<object, int> OnPasedPage;
         public ParserWorker(IParser parser)
         {
             this.parser = parser;
@@ -48,7 +49,7 @@ namespace ParserAngleSharp.Core
         public async void Worker()
         {
             List<string> elements_string_pages = new List<string>();
-
+            var presents = new List<BoardGame>();
             for (int i = parserSettings.StartPoint; i <= parserSettings.EndPoint; i++)
             {
                 string currentUrl = $"{parserSettings.BaseUrl}{parserSettings.Prefix}".Replace("{CurrentId}", i.ToString());
@@ -56,25 +57,22 @@ namespace ParserAngleSharp.Core
                 var domParser = new HtmlParser();
                 var document = await domParser.ParseDocumentAsync(source);
                 parser.GetElementsPagesPath(document).ForEach(item => elements_string_pages.Add(item));
-            }
-
-            var presents = new List<BoardGame>();
-
-            foreach (var item in elements_string_pages)
-            {
-                var source2 = await loader.GetSourseByPath(item);
-                var domParser2 = new HtmlParser();
-                var document2 = await domParser2.ParseDocumentAsync(source2);
-                var element = parser.ParseElement(document2);
-                if (element != null)
-                {
-                    presents.Add(element);
-                }
                 
+                presents = new List<BoardGame>();
+                foreach (var item in elements_string_pages)
+                {
+                    var source2 = await loader.GetSourseByPath(item);
+                    var domParser2 = new HtmlParser();
+                    var document2 = await domParser2.ParseDocumentAsync(source2);
+                    var element = parser.ParseElement(document2);
+                    if (element != null)
+                    {
+                        presents.Add(element);
+                    }
+                }
+                OnPasedPage?.Invoke(this, i);
             }
-
             OnNewData?.Invoke(this, presents);
-
         }
     }
 }

@@ -9,11 +9,11 @@ namespace ParserAngleSharp.Core
         public int Price { get; set; }
         public string Image { get; set; }
         public int Age { get; set; }
-        public string PlayTime { get; set; }
+        public int PlayTime { get; set; }
         public int PlayersNumberMin { get; set; }
-        public int PlayersNumberMax{ get; set; }
+        public int? PlayersNumberMax{ get; set; }
 
-        public BoardGame(string Name, string Description, int Price, string Image, int Age, string PlayTime, int PlayersNumberMin, int PlayersNumberMax) 
+        public BoardGame(string Name, string Description, int Price, string Image, int Age, int PlayTime, int PlayersNumberMin, int? PlayersNumberMax) 
         {
             this.Name = Name;
             this.Description = Description;
