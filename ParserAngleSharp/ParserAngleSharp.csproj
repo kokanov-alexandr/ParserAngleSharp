@@ -94,8 +94,10 @@
     <Compile Include="Core\Interfaces\IParserSettings.cs" />
     <Compile Include="Core\Hobbygames\HobbygamesParser.cs" />
     <Compile Include="Core\Hobbygames\HobbygamesSettings.cs" />
+    <Compile Include="Core\Lavkaigr\LavkaigrParser.cs" />
+    <Compile Include="Core\Lavkaigr\LavkaigrSettings.cs" />
     <Compile Include="Core\ParserWorker.cs" />
-    <Compile Include="Core\Database.cs" />
+    <Compile Include="Database.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

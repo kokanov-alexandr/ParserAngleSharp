@@ -16,7 +16,7 @@ namespace ParserAngleSharp
         public MainWindow()
         {
             InitializeComponent();
-            parser = new ParserWorker (new IgroTimeParser());
+            parser = new ParserWorker (new LavkaigrParser());
             parser.OnNewData += Parser_OnNewData;
             parser.OnPasedPage += Parser_OnPasedPage;
             games = new List<BoardGame>();
@@ -37,7 +37,7 @@ namespace ParserAngleSharp
 
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
-            parser.Settings = new IgroTimeSettings(Int32.Parse(StartPageNumber.Text), Int32.Parse(StopPageNumber.Text));
+            parser.Settings = new LavkaigrSettings(Int32.Parse(StartPageNumber.Text), Int32.Parse(StopPageNumber.Text));
             parser.Worker();
 
         }

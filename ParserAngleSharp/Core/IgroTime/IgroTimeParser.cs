@@ -68,7 +68,7 @@ namespace ParserAngleSharp.Core.IgroTime
                 {
                     time = Int32.Parse(array_time[0].Split(' ')[1]);
 
-                }
+                }   
                 catch (Exception)
                 {
                     return null;
