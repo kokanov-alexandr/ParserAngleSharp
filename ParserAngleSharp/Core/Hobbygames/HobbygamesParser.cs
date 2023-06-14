@@ -1,14 +1,13 @@
 ﻿using AngleSharp.Html.Dom;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 
 namespace ParserAngleSharp.Core.Mosigra
 {
     internal class HobbygamesParser : IParser
-    {
+    {   
         public List<string> GetElementsPagesPath(IHtmlDocument document)
         {
             var items = document.GetElementsByClassName("product-item__content");
@@ -25,7 +24,8 @@ namespace ParserAngleSharp.Core.Mosigra
         {
             var name = document.GetElementsByClassName("product-info__main")[0].GetElementsByTagName("h1")[0].TextContent;
                 
-            var str_price = document.GetElementsByClassName("price-block")[0].TextContent.Trim().Replace(" ", "");
+            var str_price = document.GetElementsByClassName("price-item")[0].TextContent.Trim().Replace(" ", "");
+
             int price = Int32.Parse(str_price = str_price.Replace(((char)(160)).ToString(), "").Replace("₽", ""));
 
             var image = document.GetElementsByClassName("product-info__images")[0].GetElementsByTagName("a")[0].GetAttribute("href");
@@ -72,4 +72,6 @@ namespace ParserAngleSharp.Core.Mosigra
             return new BoardGame(name, description, price, image, age, time, players_min, players_max);
         }
     }
+
+   
 }

@@ -1,13 +1,16 @@
-﻿using MySql.Data.MySqlClient;
+﻿    using MySql.Data.MySqlClient;
 using ParserAngleSharp.Core;
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ParserAngleSharp
 {
     class Database
     {
-        MySqlConnection connection = new MySqlConnection("server=localhost;port=3306;username=root;password=root;database=boardgames");
+        readonly MySqlConnection connection = new MySqlConnection("server=localhost;port=3306;username=root;password=root;database=boardgames");
         public void OpenConnection()
         {
             if (connection.State == System.Data.ConnectionState.Closed) 
@@ -32,7 +35,7 @@ namespace ParserAngleSharp
             var select_category_id = new MySqlCommand("SELECT * FROM `categories` WHERE `name` = @CategoryName;", GetConnection());
             select_category_id.Parameters.Add("@CategoryName", MySqlDbType.Text).Value = category_name;
 
-            MySqlDataReader reader = select_category_id.ExecuteReader();
+            var reader = select_category_id.ExecuteReader();
             reader.Read();
             var category_id = reader[0].ToString();
             reader.Close();
@@ -46,9 +49,14 @@ namespace ParserAngleSharp
         {
             foreach (var game in games)
             {
+                SaveImage(game);
+                game.Image = ComputeSHA256Hash(game.Image) + ".png";
+
                 OpenConnection();
 
-                MySqlCommand command = new MySqlCommand("INSERT INTO `games` (`id`, `name`, `image`, `description`, `play_time`, `players_number_min`, `players_number_max`, `price`, `age`) " +
+
+
+                var command = new MySqlCommand("INSERT INTO `games` (`id`, `name`, `image`, `description`, `play_time`, `players_number_min`, `players_number_max`, `price`, `age`) " +
                     "VALUES (NULL, @Name, @Image, @Description, @PlayTime, @PlayersNumberMin, @PlayersNumberMax, @Price, @Age); SELECT LAST_INSERT_ID();", GetConnection());
 
                 command.Parameters.Add("@Name", MySqlDbType.Text).Value = game.Name;
@@ -91,10 +99,30 @@ namespace ParserAngleSharp
                 {
                     SaveGameCategory("Игры для компании", game_id);
                 }
+
                 CloseConnection();
 
-
             }
+        }
+
+        public static string ComputeSHA256Hash(string text)
+        {
+            using (var sha256 = new SHA256Managed())
+            {
+                return BitConverter.ToString(sha256.ComputeHash(Encoding.UTF8.GetBytes(text))).Replace("-", "");
+            }
+        }
+
+
+
+        public void SaveImage(BoardGame boardGame)
+        {
+            string imageUrl = boardGame.Image;
+
+            string savePath = "C:\\OpenServer\\domains\\BoardGames\\images\\" + ComputeSHA256Hash(boardGame.Name) + ".png";
+
+            WebClient client = new WebClient();
+            client.DownloadFile(imageUrl, savePath);
         }
 
     }

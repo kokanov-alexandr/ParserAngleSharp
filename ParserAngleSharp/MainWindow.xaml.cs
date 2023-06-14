@@ -4,6 +4,12 @@ using ParserAngleSharp.Core.IgroTime;
 using ParserAngleSharp.Core.Mosigra;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace ParserAngleSharp
@@ -15,14 +21,20 @@ namespace ParserAngleSharp
         Database database;
         public MainWindow()
         {
+
             InitializeComponent();
-            parser = new ParserWorker (new LavkaigrParser());
+            parser = new ParserWorker(new HobbygamesParser());
             parser.OnNewData += Parser_OnNewData;
             parser.OnPasedPage += Parser_OnPasedPage;
             games = new List<BoardGame>();
             database = new Database();
         }
-     
+
+
+       
+
+
+
         private void Parser_OnNewData(object arg1, List<BoardGame> arg2)
         {
             games = arg2;
@@ -37,7 +49,7 @@ namespace ParserAngleSharp
 
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
-            parser.Settings = new LavkaigrSettings(Int32.Parse(StartPageNumber.Text), Int32.Parse(StopPageNumber.Text));
+            parser.Settings = new HobbygamesSettings(Int32.Parse(StartPageNumber.Text), Int32.Parse(StopPageNumber.Text));
             parser.Worker();
 
         }

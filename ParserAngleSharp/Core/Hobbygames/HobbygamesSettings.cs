@@ -10,7 +10,7 @@
         {
             this.StartPoint = StartPoint;
             this.EndPoint = EndPoint;
-            Prefix = "?page={CurrentId}";
+            Prefix = "?page={CurrentId}";   
             BaseUrl = "https://hobbygames.ru/nastolnie";
         }
     }

@@ -22,7 +22,8 @@ namespace ParserAngleSharp.Core.IgroTime
 
         public BoardGame ParseElement(IHtmlDocument document)
         {
-            var name = document.GetElementsByClassName("col-rt")[0].GetElementsByTagName("h1")[0].TextContent.Replace("Настольная игра ", "");
+            var name = document.GetElementsByClassName("col-rt")[0].GetElementsByTagName("h1")[0].TextContent
+                .Replace("Настольная игра ", "");
 
             var str_price = "";
 
@@ -32,7 +33,8 @@ namespace ParserAngleSharp.Core.IgroTime
 
             try
             {
-                str_price = document.GetElementsByClassName("card__price__wrapper")[0].TextContent.Split('р')[0].Trim().Replace(" ", "");
+                str_price = document.GetElementsByClassName("card__price__wrapper")[0].TextContent
+                    .Split('р')[0].Trim().Replace(" ", "");
 
                 string str_players_count = document.GetElementsByClassName("characts__item")[1].GetElementsByTagName("a")[0].TextContent;
                 players = str_players_count.Split('-');
@@ -67,7 +69,6 @@ namespace ParserAngleSharp.Core.IgroTime
                 try
                 {
                     time = Int32.Parse(array_time[0].Split(' ')[1]);
-
                 }   
                 catch (Exception)
                 {

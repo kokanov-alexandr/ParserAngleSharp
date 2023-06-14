@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParserAngleSharp.Core.Mosigra
 {
@@ -26,16 +24,21 @@ namespace ParserAngleSharp.Core.Mosigra
             var name = document.GetElementsByClassName("game-name")[0].TextContent;
 
 
-            int price = Int32.Parse(document.GetElementsByClassName("price")[0].TextContent.Replace(" " , "").Replace("\n", "").Replace("руб.", ""));
+            int price = Int32.Parse(document.GetElementsByClassName("price")[0].TextContent
+                .Replace(" " , "").Replace("\n", "").Replace("руб.", ""));
 
             string[] players;
             int players_min;
             int? players_max;
 
 
-            var a = document.GetElementsByClassName("info-01")[0].Children[0].Children[1].Children[0];
+            var a = document.GetElementsByClassName("info-01")[0]
+                .Children[0].Children[1].Children[0];
 
-            string str_players_count = document.GetElementsByClassName("info-01")[0].Children[0].Children[1].Children[0].TextContent.Replace(" ", "").Replace("\n", "");
+            string str_players_count = document.GetElementsByClassName("info-01")[0]
+                .Children[0].Children[1].Children[0].TextContent
+                .Replace(" ", "").Replace("\n", "");
+
             players = str_players_count.Split('-');
             players_min = Int32.Parse(players[0]);
 
@@ -50,16 +53,20 @@ namespace ParserAngleSharp.Core.Mosigra
 
             var image = document.GetElementsByClassName("large-img")[0].GetAttribute("src");
 
-            int age = Int32.Parse(document.GetElementsByClassName("info-01")[0].Children[2].Children[1].TextContent.Split()[1]);
+            int age = Int32.Parse(document.GetElementsByClassName("info-01")[0]
+                .Children[2].Children[1].TextContent.Split()[1]);
 
-            int time = Int32.Parse(document.GetElementsByClassName("info-01")[0].Children[1].Children[1].TextContent.Replace(" мин.", "").
-                Replace("\n", "").Replace(" ", "").Split('-')[0]);
+            int time = Int32.Parse(document.GetElementsByClassName("info-01")[0]
+                .Children[1].Children[1].TextContent
+                .Replace(" мин.", "").Replace("\n", "").Replace(" ", "").Split('-')[0]);
     
             var description_div = document.GetElementsByClassName("txt-box box open")[0];
 
             var description_list = description_div.GetElementsByTagName("p").ToList();
 
-            description_list = description_div.GetElementsByTagName("p").Where(x => x.TextContent.Length > 1).ToList();
+            description_list = description_div.GetElementsByTagName("p")
+                .Where(x => x.TextContent.Length > 1).ToList();
+
             var description = "";
 
 
